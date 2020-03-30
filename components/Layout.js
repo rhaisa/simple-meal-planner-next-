@@ -13,6 +13,11 @@ const Layout = props => {
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
             crossOrigin="anonymous"
           ></link>
+          <link
+            href="https://fonts.googleapis.com/css?family=Text+Me+One&display=swap"
+            rel="stylesheet"
+            key="google-font-cabin"
+          />
         </Head>
         <div className="innerContainer">
           <Navbar />

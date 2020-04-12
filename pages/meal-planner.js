@@ -1,14 +1,12 @@
 import Layout from '../components/Layout';
+import Calendar from '../components/Calendar';
 import Link from 'next/link';
 
 const MealPlanner = () => {
   return (
     <Layout>
-      <div className="calender">
-        <img className="arrow" src="/arrow-left.svg" />
-        23.03 - 29.03
-        <img className="arrow" src="/arrow-right.svg" />
-      </div>
+      <Calendar />
+
       <table>
         <thead>
           <tr>
@@ -149,57 +147,30 @@ const MealPlanner = () => {
       </table>
 
       <style jsx>{`
-
-        .calender{
-          display: flex;
-          width:200px;
-          border 1.8px solid #222;
-          border-radius:50px;
-          font-size:15px;
+        table {
+          width: 100%;
           text-align: center;
-          margin-left: auto;
-          margin-right: auto;
-          margin-bottom: 50px;
-          justify-content:center;
-          font-family:Text Me One;
-          
+          font-family: Text Me One;
         }
-        .arrow{
-          width:15px;
-          margin-left: 15px;
-          margin-right: 15px;
+        thead {
+          border-bottom: 1px solid #222;
         }
-        
-        table{
-          width:100%;
-          text-align: center;
-          font-family:Text Me One;
-        
-        }
-        thead{
-         border-bottom: 1px solid #222;
-        }
-        .whiteLink{
-          
-          height:68px;
+        .whiteLink {
+          height: 68px;
           background-color: #fff;
         }
-        .blackLink{
-          
-          height:68px;
+        .blackLink {
+          height: 68px;
           background-color: #222;
-          color:white;
-          justify-content:center;
+          color: white;
+          justify-content: center;
         }
-        .letter{
+        .letter {
           text-align: center;
         }
-        Link{
-          
+        link {
         }
-
-
-        `}</style>
+      `}</style>
     </Layout>
   );
 };

@@ -1,11 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
-import moment from 'moment';
 
-const Calendar = () => {
-  const [now, setNow] = useState(moment());
-  const [monday, setMonday] = useState(now.clone().weekday(1));
-  const [sunday, setSunday] = useState(now.clone().weekday(7));
-
+const Calendar = ({ monday, sunday, setMonday, setSunday }) => {
   const leftArrow = () => {
     console.log('leftArrow');
     setMonday(monday.clone().subtract(7, 'days'));

@@ -1,11 +1,36 @@
+import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import Calendar from '../components/Calendar';
 import Link from 'next/link';
+import moment from 'moment';
 
 const MealPlanner = () => {
+  const [now] = useState(moment());
+  const [monday, setMonday] = useState(now.clone().weekday(1));
+  const [sunday, setSunday] = useState(now.clone().weekday(7));
+  const tuesday = monday.clone().add(1, 'day');
+  const wednesday = tuesday.clone().add(1, 'day');
+  const thursday = wednesday.clone().add(1, 'day');
+  const friday = thursday.clone().add(1, 'day');
+  const saturday = friday.clone().add(1, 'day');
+  const daysOfTheWeek = [
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday,
+    sunday,
+  ];
+
   return (
     <Layout>
-      <Calendar />
+      <Calendar
+        monday={monday}
+        sunday={sunday}
+        setMonday={setMonday}
+        setSunday={setSunday}
+      />
 
       <table>
         <thead>
@@ -17,132 +42,30 @@ const MealPlanner = () => {
           </tr>
         </thead>
         <tbody>
-          <tr className="whiteLink">
-            <td className="letter">M</td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-          </tr>
-          <tr className="blackLink">
-            <td className="letter">T</td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-          </tr>
-          <tr className="whiteLink">
-            <td className="letter">W</td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-          </tr>
-          <tr className="blackLink">
-            <td className="letter">Th</td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-          </tr>
-          <tr className="whiteLink">
-            <td className="letter">F</td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-          </tr>
-          <tr className="blackLink">
-            <td className="letter">S</td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-          </tr>
-          <tr className="whiteLink">
-            <td className="letter"> Su</td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-            <td>
-              <Link href="/add-meal">
-                <a>New Meal</a>
-              </Link>
-            </td>
-          </tr>
+          {daysOfTheWeek.map(day => {
+            const urlDate = day.format('DD-MM-YYYY');
+            console.log(urlDate);
+            return (
+              <tr key={day.format()}>
+                <td className="letter">{day.format('dd')}</td>
+                <td>
+                  <Link href={`/add-meal?type=breakfast&date=${urlDate}`}>
+                    <a>New Meal</a>
+                  </Link>
+                </td>
+                <td>
+                  <Link href={`/add-meal?type=lunch&date=${urlDate}`}>
+                    <a>New Meal</a>
+                  </Link>
+                </td>
+                <td>
+                  <Link href={`/add-meal?type=dinner&date=${urlDate}`}>
+                    <a>New Meal</a>
+                  </Link>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 
@@ -155,12 +78,13 @@ const MealPlanner = () => {
         thead {
           border-bottom: 1px solid #222;
         }
-        .whiteLink {
+        tr {
           height: 68px;
+        }
+        tr:nth-child(odd) {
           background-color: #fff;
         }
-        .blackLink {
-          height: 68px;
+        tr:nth-child(even) {
           background-color: #222;
           color: white;
           justify-content: center;

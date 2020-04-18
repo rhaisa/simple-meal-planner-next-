@@ -1,26 +1,35 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { v4 as uuid } from 'uuid';
 import Layout from '../components/Layout';
 import { weekdays } from 'moment';
 
 const AddMeal = () => {
+  const router = useRouter();
   const [items, setItems] = useState([]);
-  // is to keep the object in the memory of React - I'm saying: save in the memory it for me please
+  // is to keep the object in the memory of React - I'm saying: save in the memory it for me please.
   const [draft, setDraft] = useState({
     id: uuid(), //following the library instructions
     name: '',
   });
-  // Here the Draft is replaced by a new version (name: event.target.value) -I'm saying: get this new information and save
-  const handleChange = event => {
+  const [meal, setMeal] = useState({
+    id: uuid(),
+    date: router.query.date,
+    mealType: router.query.type,
+  });
+  // Here the Draft is replaced by a new version (name: event.target.value) -I'm saying: get this new information and save.
+  const handleChange = (event) => {
     const newDraft = {
       ...draft, //is geting of the draft object (id and name)
       name: event.target.value,
     };
     setDraft(newDraft); // this replace the draft to the newDraft
   };
-  //The information here will be saved in localStorage(browser). JSON.stringify is to transform the object(item) into a string
-  const handleClick = () => {
-    const newItems = [...items, draft]; //...it deconstructs the list into a new one/ draft is a object
+  console.log(meal);
+
+  //The information here will be saved in localStorage(browser). JSON.stringify is to transform the object(item) into a string.
+  const addMealItem = () => {
+    const newItems = [...items, draft]; //...it deconstructs the list into a new one/ draft is a object.
     setItems(newItems);
     const newItemsString = JSON.stringify(newItems);
     localStorage.setItem('items', newItemsString);
@@ -31,8 +40,8 @@ const AddMeal = () => {
   };
 
   function deleteItem(id) {
-    const newItems = items.filter(item => item.id !== id); // if item.id is different from the given id, keep the item
-    //I'm saying: setItems please replace the "items" variable with this new list
+    const newItems = items.filter((item) => item.id !== id); // if item.id is different from the given id, keep the item.
+    //I'm saying: setItems please replace the "items" variable with this new list.
     setItems(newItems);
   }
 
@@ -44,11 +53,11 @@ const AddMeal = () => {
         className="inputbox"
         placeholder="Type Here"
       />
-      <button className="btn" onClick={handleClick}>
+      <button className="btn" onClick={addMealItem}>
         Add Meal
       </button>
       <div>
-        {items.map(item => {
+        {items.map((item) => {
           return (
             <div className="list" key={item.id}>
               {item.name}

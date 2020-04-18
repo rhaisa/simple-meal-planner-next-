@@ -42,13 +42,14 @@ const MealPlanner = () => {
           </tr>
         </thead>
         <tbody>
-          {daysOfTheWeek.map(day => {
+          {daysOfTheWeek.map((day) => {
             const urlDate = day.format('DD-MM-YYYY');
-            console.log(urlDate);
+
             return (
               <tr key={day.format()}>
                 <td className="letter">{day.format('dd')}</td>
                 <td>
+                  {/* URL "?" split the route from the paramiters. & is to split type and date */}
                   <Link href={`/add-meal?type=breakfast&date=${urlDate}`}>
                     <a>New Meal</a>
                   </Link>
